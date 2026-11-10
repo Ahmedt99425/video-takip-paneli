@@ -1,4 +1,6 @@
-
+// Project URL ve Publishable key girin. Secret/service_role kullanmayın.
+window.SUPABASE_URL="https://sgsvfxlsxvmaxysdmuqm.supabase.co/";
+window.SUPABASE_KEY="sb_publishable_xHA9fUOzBvEPQuhZcBwHYQ_GaJrUjAb";
 const CACHE = "vtp-v2";
 
 const FILES = [
