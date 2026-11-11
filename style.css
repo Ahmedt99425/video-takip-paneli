@@ -1,1 +1,241 @@
-*{box-sizing:border-box}body{margin:0;background:#f1f5f9;color:#172033;font:16px system-ui}header{background:#111827;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}main,#auth{max-width:760px;margin:20px auto;padding:14px}.card{background:white;border:1px solid #ddd;border-radius:13px;padding:15px;margin:12px 0}.hidden{display:none!important}input,select,textarea{display:block;width:100%;padding:11px;margin:7px 0 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}input[type=checkbox]{display:inline-block;width:auto;margin-right:8px}button,.watch-link{display:inline-block;padding:11px 15px;border:0;border-radius:8px;background:#2563eb;color:white;margin:4px;font:inherit;text-decoration:none;cursor:pointer}.stats{display:flex;gap:10px}.stats .card{flex:1}.menu-toggle{width:100%;text-align:left;background:#111827;margin:10px 0}nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 18px}nav button{background:#172033}nav button.active{background:#2563eb}.menu-collapsed{display:none}label{font-size:14px;font-weight:600}.item{background:white;border:1px solid #ddd;border-radius:12px;padding:15px;margin:12px 0;overflow-wrap:anywhere}.item h3{margin:12px 0}small{color:#64748b}.card-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:14px}.danger{background:#b91c1c}.watch-link{background:#0f766e}.no-link,.empty{color:#64748b;font-size:14px}.task-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.task-item label{flex:1}#msg{min-height:24px}@media(max-width:520px){main,#auth{padding:10px}.stats{gap:4px}.stats .card{padding:12px;font-size:14px}.card-actions button,.card-actions .watch-link{flex:1;text-align:center}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+  color: #172033;
+  font: 16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+header {
+  background: #111827;
+  color: white;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main, #auth {
+  max-width: 760px;
+  margin: 20px auto;
+  padding: 14px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 13px;
+  padding: 15px;
+  margin: 12px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  margin: 7px 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+  width: auto;
+  margin-right: 8px;
+}
+
+button, .watch-link {
+  display: inline-block;
+  padding: 11px 15px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  margin: 4px;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:focus, .watch-link:focus {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+}
+
+.stats .card {
+  flex: 1;
+}
+
+.menu-toggle {
+  width: 100%;
+  text-align: left;
+  background: #111827;
+  margin: 10px 0;
+}
+
+.main-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 18px;
+}
+
+.main-menu button {
+  background: #172033;
+}
+
+.main-menu button.active {
+  background: #2563eb;
+}
+
+.main-menu.menu-collapsed {
+  display: none;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.item {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.item h3 {
+  margin: 12px 0;
+}
+
+small {
+  color: #64748b;
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.danger {
+  background: #b91c1c;
+}
+
+.watch-link {
+  background: #0f766e;
+}
+
+.no-link, .empty {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.task-item label {
+  flex: 1;
+}
+
+#msg {
+  min-height: 24px;
+}
+
+/* Dizimola açılış ekranı */
+#splashScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #08090d;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#splashScreen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#splashScreen p,
+#splashScreen .splash-loading {
+  position: relative;
+  z-index: 2;
+}
+
+#splashScreen p {
+  color: #fff;
+  font-weight: 700;
+  margin-top: 20px;
+  text-align: center;
+  text-shadow: 0 2px 8px #000;
+}
+
+.splash-loading {
+  width: 35px;
+  height: 35px;
+  border: 4px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ef2525;
+  border-radius: 50%;
+  animation: splashSpin 0.8s linear infinite;
+}
+
+#splashScreen.splash-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes splashSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 520px) {
+  main, #auth {
+    padding: 10px;
+  }
+
+  .stats {
+    gap: 4px;
+  }
+
+  .stats .card {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .card-actions button, .card-actions .watch-link {
+    flex: 1;
+    text-align: center;
+  }
+}
