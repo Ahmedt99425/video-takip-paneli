@@ -9,6 +9,24 @@
   <link rel="apple-touch-icon" href="./assets/icon-512.png">
   <title>Dizimola Paylaşım Takip</title>
   <link rel="stylesheet" href="./style.css">
+  
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "7026ee08-4e98-407c-bc82-4708b38c4cb3",
+    serviceWorkerPath: "push/OneSignalSDKWorker.js",
+    serviceWorkerParam: {
+      scope: "/video-takip-paneli/push/"
+    },
+    notifyButton: {
+      enable: true
+    }
+  });
+});
+</script>
+
 </head>
 <body>
   <div id="splashScreen" aria-label="Dizimola Paylaşım Takip açılıyor">
