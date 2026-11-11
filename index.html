@@ -1,16 +1,128 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111827"><link rel="manifest" href="./manifest.json"><link rel="icon" type="image/png" href="./assets/icon-512.png">
-<link rel="apple-touch-icon" href="./assets/icon-512.png"><title>Dizimola Paylaşım Takip</title><link rel="stylesheet" href="./style.css"></head><body>
-<header><b>🎬 Dizimola Paylaşım Takip</b><button id="logout" class="hidden">Çıkış</button></header>
-<section id="auth" class="card"><h2>Hesabına giriş yap</h2><input id="email" type="email" placeholder="E-posta"><input id="password" type="password" placeholder="Şifre (en az 8 karakter)"><button id="login">Giriş yap</button><button id="register">Hesap oluştur</button><p id="authMsg"></p></section>
-<main id="app" class="hidden"><div class="stats"><div class="card">Planlanan <b id="pc">0</b></div><div class="card">Paylaşılan <b id="dc">0</b></div></div>
-<button id="menuToggle" class="menu-toggle">☰ Menü</button><nav id="mainMenu"><button data-tab="published">Paylaşılan içerikler</button><button data-tab="planned">Planlanan içerikler</button><button data-tab="notes">Notlar</button><button data-tab="tasks">Yapılacaklar</button><button data-tab="add">+ İçerik ekle</button></nav>
-<section id="published" class="tab-panel hidden"><h2>Paylaşılan içerikler</h2><div id="publishedList"></div></section>
-<section id="planned" class="tab-panel hidden"><h2>Paylaşılacak / Planlanan içerikler</h2><div id="plannedList"></div></section>
-<section id="add" class="tab-panel"><h2>Video ekle</h2><form id="vf" class="card">
-<label>Platform<select id="platform"><option>Instagram</option><option>TikTok</option><option>Facebook</option></select></label>
-<label>Hesap<input id="account" required placeholder="Örn. dizimola0"></label><label>Film / video adı<input id="film" required></label><label>Video başlığı<input id="title"></label><label>Açıklama<textarea id="description"></textarea></label>
-<label>Video bağlantısı (isteğe bağlı)<input id="videoUrl" type="url" placeholder="https://..."></label><label>Tarih<input id="date" type="date"></label><label>Saat<input id="time" type="time"></label>
-<label>Durum<select id="status"><option value="planned">Planlandı</option><option value="published">Paylaşıldı</option></select></label><button type="submit">Kaydet</button></form></section>
-<section id="notes" class="tab-panel hidden"><h2>Notlarım</h2><form id="nf" class="card"><input id="nt" required placeholder="Not başlığı"><textarea id="nb" placeholder="Not içeriği"></textarea><button>Notu kaydet</button></form><div id="nl"></div></section>
-<section id="tasks" class="tab-panel hidden"><h2>Yapılacaklar</h2><form id="tf" class="card"><input id="taskText" required placeholder="Görev"><input id="taskDate" type="date"><button>Ekle</button></form><div id="tl"></div></section><p id="msg"></p></main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><script src="./app.js"></script><script>if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));</script></body></html>
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./assets/icon-512.png">
+  <link rel="apple-touch-icon" href="./assets/icon-512.png">
+  <title>Dizimola Paylaşım Takip</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="splashScreen" aria-label="Dizimola Paylaşım Takip açılıyor">
+    <img src="./assets/splash.png" alt="Dizimola Paylaşım Takip">
+    <div class="splash-loading" aria-hidden="true"></div>
+    <p>Dizimola Paylaşım Takip</p>
+  </div>
+
+  <header>
+    <b>🎬 Dizimola Paylaşım Takip</b>
+    <button id="logout" class="hidden">Çıkış</button>
+  </header>
+
+  <section id="auth" class="card">
+    <h2>Hesabına giriş yap</h2>
+    <input id="email" type="email" placeholder="E-posta" autocomplete="email">
+    <input id="password" type="password" placeholder="Şifre (en az 8 karakter)" autocomplete="current-password">
+    <button id="login">Giriş yap</button>
+    <button id="register">Hesap oluştur</button>
+    <p id="authMsg"></p>
+  </section>
+
+  <main id="app" class="hidden">
+    <div class="stats">
+      <div class="card">Planlanan <b id="pc">0</b></div>
+      <div class="card">Paylaşılan <b id="dc">0</b></div>
+    </div>
+
+    <button id="menuToggle" class="menu-toggle" aria-expanded="true">☰ Menü</button>
+    <nav id="mainMenu" class="main-menu">
+      <button data-tab="published">Paylaşılan içerikler</button>
+      <button data-tab="planned">Planlanan içerikler</button>
+      <button data-tab="notes">Notlar</button>
+      <button data-tab="tasks">Yapılacaklar</button>
+      <button data-tab="add">+ İçerik ekle</button>
+    </nav>
+
+    <section id="published" class="tab-panel hidden">
+      <h2>Paylaşılan içerikler</h2>
+      <div id="publishedList"></div>
+    </section>
+
+    <section id="planned" class="tab-panel hidden">
+      <h2>Paylaşılacak / Planlanan içerikler</h2>
+      <div id="plannedList"></div>
+    </section>
+
+    <section id="add" class="tab-panel">
+      <h2>Video ekle</h2>
+      <form id="vf" class="card">
+        <label>Platform
+          <select id="platform">
+            <option>Instagram</option>
+            <option>TikTok</option>
+            <option>Facebook</option>
+          </select>
+        </label>
+        <label>Hesap<input id="account" required placeholder="Örn. dizimola0"></label>
+        <label>Film / video adı<input id="film" required></label>
+        <label>Video başlığı<input id="title"></label>
+        <label>Açıklama<textarea id="description"></textarea></label>
+        <label>Video bağlantısı (isteğe bağlı)
+          <input id="videoUrl" type="url" placeholder="https://...">
+        </label>
+        <label>Tarih<input id="date" type="date"></label>
+        <label>Saat<input id="time" type="time"></label>
+        <label>Durum
+          <select id="status">
+            <option value="planned">Planlandı</option>
+            <option value="published">Paylaşıldı</option>
+          </select>
+        </label>
+        <button type="submit">Kaydet</button>
+      </form>
+    </section>
+
+    <section id="notes" class="tab-panel hidden">
+      <h2>Notlarım</h2>
+      <form id="nf" class="card">
+        <input id="nt" required placeholder="Not başlığı">
+        <textarea id="nb" placeholder="Not içeriği"></textarea>
+        <button type="submit">Notu kaydet</button>
+      </form>
+      <div id="nl"></div>
+    </section>
+
+    <section id="tasks" class="tab-panel hidden">
+      <h2>Yapılacaklar</h2>
+      <form id="tf" class="card">
+        <input id="taskText" required placeholder="Görev">
+        <input id="taskDate" type="date">
+        <button type="submit">Ekle</button>
+      </form>
+      <div id="tl"></div>
+    </section>
+    <p id="msg" role="status"></p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+  <script>
+    window.addEventListener("load", function () {
+      window.setTimeout(function () {
+        const splash = document.getElementById("splashScreen");
+        if (splash) splash.classList.add("splash-hidden");
+      }, 1500);
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./sw.js");
+      });
+    }
+  </script>
+</body>
+</html>
