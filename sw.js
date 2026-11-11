@@ -1,3 +1,4 @@
+importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 const CACHE = 'vtp-v3';
 const FILES = ['./', './index.html', './style.css', './app.js', './manifest.json'];
 
